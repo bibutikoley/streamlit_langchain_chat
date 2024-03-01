@@ -1,11 +1,16 @@
 import streamlit as st
+from langchain_core.callbacks import CallbackManager
 from langchain_core.messages import HumanMessage, AIMessage
 from langchain_core.prompts import ChatPromptTemplate
 from langchain_core.output_parsers import StrOutputParser
 from langchain_community.llms import Ollama
+from langchain.callbacks.streaming_stdout import StreamingStdOutCallbackHandler
 
 # Define the LLM
-llm = Ollama(model='mistral')
+llm = Ollama(
+    model='mistral',
+    callback_manager=CallbackManager([StreamingStdOutCallbackHandler()]),
+)
 
 # Define the Streamlit app
 st.set_page_config(page_title="Streaming Bot", page_icon="🤖")
